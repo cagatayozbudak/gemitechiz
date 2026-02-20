@@ -12,8 +12,10 @@ android.permissions = WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 android.api = 31
 android.minapi = 21
 android.ndk = 25b
-android.arch = arm64-v8a
+android.archs = arm64-v8a
+android.build_tools_version = 33.0.2
 
 [buildozer]
 log_level = 2
+
 warn_on_root = 0
