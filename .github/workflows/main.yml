@@ -39,17 +39,18 @@ jobs:
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-31" "build-tools;33.0.2"
 
-      - name: Clean buildozer cached SDK/NDK
+      - name: Buildozer init (download SDK/NDK)
         run: |
-          rm -rf ~/.buildozer/android/platform/android-sdk
-          rm -rf ~/.buildozer/android/platform/android-ndk*
-          rm -rf ~/.buildozer/android/platform/build-*
+          buildozer -v android debug || true
+
+      - name: Accept licenses in Buildozer SDK + install stable packages
+        run: |
+          SDKROOT="$HOME/.buildozer/android/platform/android-sdk"
+          yes | "$SDKROOT/tools/bin/sdkmanager" --sdk_root="$SDKROOT" --licenses
+          "$SDKROOT/tools/bin/sdkmanager" --sdk_root="$SDKROOT" \
+            "platform-tools" "platforms;android-31" "build-tools;33.0.2"
 
       - name: Build APK
-        env:
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
-          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
-          ANDROIDSDK: ${{ env.ANDROID_SDK_ROOT }}
         run: |
           buildozer -v android debug
 
