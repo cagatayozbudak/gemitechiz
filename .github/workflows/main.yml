@@ -27,7 +27,9 @@ jobs:
       - name: Install system deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y zip unzip autoconf libtool pkg-config cmake libffi-dev libssl-dev
+          sudo apt-get install -y \
+            zip unzip autoconf automake libtool pkg-config cmake \
+            libffi-dev libssl-dev gettext autopoint
 
       - name: Install Python deps
         run: |
