@@ -26,6 +26,13 @@ jobs:
           pip install buildozer cython virtualenv
           sudo apt-get install -y zip unzip autoconf libtool pkg-config cmake libffi-dev libssl-dev
 
+      - name: Accept Android licenses
+        run: |
+          mkdir -p $HOME/.android
+          echo "count=0" > $HOME/.android/repositories.cfg
+          yes | buildozer android debug 2>&1 | head -5 || true
+          find $HOME/.buildozer -name "sdkmanager" 2>/dev/null | head -1 | xargs -I{} sh -c 'yes | {} --licenses' || true
+
       - name: Build APK
         run: buildozer android debug
 
